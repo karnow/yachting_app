@@ -14,8 +14,9 @@ export const getStaticProps = async () => {
   };
 };
 
+const jsonFetcher = (url) => fetch(url).then((res) => res.json());
 
-export default function Home({offers}) {
+export default function Home({ offers }) {
   console.log(offers);
   const { data } = useSWR('/api/offers', jsonFetcher, { initialData: offers });
 
