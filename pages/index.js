@@ -2,6 +2,7 @@ import BaseLayout from 'components/BaseLayout';
 import Link from 'next/link';
 import Image from 'next/image';
 import getRecentOffers from 'services/offers/getRecent';
+import useSWR from 'swr';
 
 export const getStaticProps = async () => {
   const offers = await getRecentOffers(4);
@@ -16,7 +17,7 @@ export const getStaticProps = async () => {
 
 export default function Home({offers}) {
   console.log(offers);
-  
+  const { data } = useSWR('/api/offers', jsonFetcher, { initialData: offers });
 
   return (
     <BaseLayout>

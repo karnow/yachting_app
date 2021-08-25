@@ -1,17 +1,17 @@
-// import airDB from 'services/airtableClient';
+import airDB from 'services/airtableClient';
 
-// const create = async (payload) => {
-//   const offer = await airDB('offers').create([
-//     {
-//       fields: {
-//         ...payload,
-//         price: Number(payload.price),
-//         status: 'inactive'
-//       }
-//     }
-//   ]);
+const create = async (payload) => {
+  const offer = await airDB('offers').create([
+    {
+      fields: {
+        ...payload,
+        price: Number(payload.price),
+        status: 'inactive'
+      }
+    }
+  ]);
 
-//   return offer;
-// };
+  return offer;
+};
 
-// export default create;
+export default create;
