@@ -4,13 +4,14 @@ import { useRouter } from 'next/router';
 
 export default function OfferNew() {
   const offerForm = useRef();
+  const [error, setError] = useState();
   const router = useRouter();
   const [formProcessing, setFormProcessing] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (formProcessing) return;
-
+    setError(null);
     setFormProcessing(true);
     const form = new FormData(offerForm.current);
     const payload = {
@@ -19,16 +20,26 @@ export default function OfferNew() {
       mobile: form.get('phone'),
       price: form.get('price'),
       description: form.get('description'),
-      location: form.get('location')
+      location: form.get('location'),
+      status:"active"
     };
-    await fetch('/api/offers', {
+    const response = await fetch('/api/offers', {
       method: 'POST',
       body: JSON.stringify(payload),
       headers: {
         'Content-Type': 'application/json'
       }
     });
-    router.push('/offers/thanks');
+    if (response.ok) {
+      router.push('/offers/thanks');
+    } else {
+      console.log(response);
+      const payload = await response.json();
+      console.log(payload);
+      setFormProcessing(false);
+      setError(payload.err.details[0].message);
+      console.log('blad:', error);
+    }
   };
   return (
     <BaseLayout>
@@ -132,6 +143,13 @@ export default function OfferNew() {
                   className="disabled:opacity-50 flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
                   {formProcessing ? 'Please wait...' : 'Submit offer'}
                 </button>
+                {error && (
+                  <div className="flex justify-center w-full my-5">
+                    <span className="bg-red-600 w-full rounded text-white px-3 py-3 text-center">
+                      Offer not added: {error}
+                    </span>
+                  </div>
+                )}
               </div>
             </form>
           </div>
