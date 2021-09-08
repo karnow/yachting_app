@@ -5,7 +5,7 @@ import crypto from 'crypto';
 const schema = Joi.object({
     email: Joi.string().email().required(),
     fullName: Joi.string().required(),
-    password: Joi.string.required()
+    password: Joi.string().required()
 });
 
 const create = async (payload) => {
@@ -25,3 +25,4 @@ const create = async (payload) => {
     ])
     return user;
 }
+export default create;
