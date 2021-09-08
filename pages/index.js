@@ -6,7 +6,7 @@ import useSWR from 'swr';
 import { jsonFetcher } from 'utils';
 
 export const getStaticProps = async () => {
-  const offers = await getRecentOffers(4);
+  const offers = await getRecentOffers(8);
 
   return {
     props: {
@@ -15,12 +15,10 @@ export const getStaticProps = async () => {
   };
 };
 
-
-
 export default function Home({ offers }) {
   console.log(offers);
   const { data } = useSWR('/api/offers', jsonFetcher, { initialData: offers });
-console.log('nowe data: ',data);
+  console.log('nowe data: ', data);
   return (
     <BaseLayout>
       <section className="text-gray-600 body-font">
