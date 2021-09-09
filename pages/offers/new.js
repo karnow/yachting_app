@@ -1,12 +1,20 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import BaseLayout from 'components/BaseLayout';
 import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/client';
 
 export default function OfferNew() {
   const offerForm = useRef();
   const [error, setError] = useState();
   const router = useRouter();
   const [formProcessing, setFormProcessing] = useState(false);
+  const [session, loading] = useSession();
+
+  useEffect(() => {
+    if (!session && !loading) {
+      router.push('/user/signin');
+    }
+  }, [session, loading]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,7 +29,7 @@ export default function OfferNew() {
       price: form.get('price'),
       description: form.get('description'),
       location: form.get('location'),
-      status:"active"
+      status: 'active'
     };
     const response = await fetch('/api/offers', {
       method: 'POST',
@@ -41,6 +49,12 @@ export default function OfferNew() {
       console.log('blad:', error);
     }
   };
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  if (!loading && !session) {
+    return <div>Redirecting...</div>;
+  }
   return (
     <BaseLayout>
       <section className="text-gray-600 body-font relative">
