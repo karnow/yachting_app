@@ -26,8 +26,8 @@ export default function SignIn() {
       router.push('/');
     } else {
       setError('Not authorized. Try again.');
-      setFormProcessing(false);
     }
+    setFormProcessing(false);
   };
 
   return (

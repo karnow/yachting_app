@@ -28,8 +28,8 @@ export default function OfferNew() {
       mobile: form.get('phone'),
       price: form.get('price'),
       description: form.get('description'),
-      location: form.get('location'),
-      status: 'active'
+      location: form.get('location')
+      // status: 'active'
     };
     const response = await fetch('/api/offers', {
       method: 'POST',
@@ -48,6 +48,7 @@ export default function OfferNew() {
       setError(payload.err.details[0].message);
       console.log('blad:', error);
     }
+    console.log('kto zalogowany:', session )
   };
   if (loading) {
     return <div>Loading...</div>;
@@ -57,6 +58,7 @@ export default function OfferNew() {
   }
   return (
     <BaseLayout>
+    
       <section className="text-gray-600 body-font relative">
         <div className="container px-5 py-24 mx-auto">
           <div className="flex flex-col text-center w-full mb-12">

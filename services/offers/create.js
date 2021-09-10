@@ -10,12 +10,17 @@ const schema = Joi.object({
   price: Joi.number().greater(0).required()
 });
 
-const create = async (payload) => {
+const create = async (payload, userId) => {
+  console.log('oferta dotarla do backendu',payload);
   const validatedOffer = await schema.validateAsync(payload);
+  console.log('oferta zwalidatowana',validatedOffer);
+  console.log('id usera dotarlo na backend:',userId);
+
   const offer = await airDB('offers').create([
     {
       fields: {
         ...validatedOffer,
+        users:[userId],
         status: 'inactive'
       }
     }

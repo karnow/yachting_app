@@ -13,11 +13,12 @@ const authorize = async (payload) => {
   const [user] = await airDB('users')
     .select({ filterByFormula: `email="${email}"` })
     .firstPage();
-
-  if (!user) {
-    return null;
-  }
-
+    
+    if (!user) {
+      return null;
+    }
+  console.log('co zwraca airtable dla usera:',user);
+    
   const passwordHash = crypto
     .pbkdf2Sync(password, user.fields.passwordSalt, 1000, 64, `sha512`)
     .toString(`hex`);

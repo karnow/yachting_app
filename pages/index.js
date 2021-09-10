@@ -16,9 +16,9 @@ export const getStaticProps = async () => {
 };
 
 export default function Home({ offers }) {
-  console.log(offers);
+  // console.log(offers);
   const { data } = useSWR('/api/offers', jsonFetcher, { initialData: offers });
-  console.log('nowe data: ', data);
+  // console.log('nowe data: ', data);
   return (
     <BaseLayout>
       <section className="text-gray-600 body-font">
