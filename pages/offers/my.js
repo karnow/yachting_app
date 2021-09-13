@@ -14,7 +14,7 @@ export const getServerSideProps = async ({ req }) => {
       }
     };
   }
-
+  
   const offers = await getForUser(session.user.email);
 
   return {
