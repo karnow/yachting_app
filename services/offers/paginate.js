@@ -1,5 +1,5 @@
 export default async (offset, category) => {
-  let apiUrl = `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE}/offers?pageSize=1&view=onlyActiv`
+  let apiUrl = `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE}/offers?pageSize=4&view=onlyActiv`
   if (offset) {
     apiUrl += `&offset=${offset}`;
   }
