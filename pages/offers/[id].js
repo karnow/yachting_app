@@ -2,6 +2,8 @@ import BaseLayout from 'components/BaseLayout';
 import getRecentOffers from 'services/offers/getRecent';
 import getOffer from 'services/offers/get';
 import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/client';
+import isAuthorized from 'services/offers/isAuthorized';
 
 export const getStaticPaths = async () => {
   const offers = await getRecentOffers(8);
@@ -23,6 +25,8 @@ export const getStaticProps = async ({ params }) => {
 };
 export default function OfferPage({ offer }) {
   const router = useRouter();
+  const [session] = useSession();
+
   if (router.isFallback) {
     return (
       <BaseLayout>
@@ -77,6 +81,11 @@ export default function OfferPage({ offer }) {
               className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
               src="https://dummyimage.com/400x400"
             />
+            {isAuthorized(offer, session) && (
+              <p>
+                <Link href={`/offers/${offer.id}/edit`}>Edit this offer</Link>
+              </p>
+            )}
           </div>
         </div>
       </section>
