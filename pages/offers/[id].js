@@ -4,6 +4,7 @@ import getOffer from 'services/offers/get';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/client';
 import isAuthorized from 'services/offers/isAuthorized';
+import Link from 'next/link';
 
 export const getStaticPaths = async () => {
   const offers = await getRecentOffers(8);
