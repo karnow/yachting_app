@@ -44,8 +44,8 @@ export const createCheckout = async (payload) => {
     },
     line_items: lineItems,
     mode: 'payment',
-    success_url: `http://localhost:3000/offers/${orderItem.offerId}/paymentStatus`,
-    cancel_url: `http://localhost:3000/offers/${orderItem.offerId}/paymentStatus`
+    success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/offers/${orderItem.offerId}/paymentStatus`,
+    cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/offers/${orderItem.offerId}/paymentStatus`
   };
 
   const session = await stripe.checkout.sessions.create(paymentObject);
