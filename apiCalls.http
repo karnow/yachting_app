@@ -26,3 +26,18 @@ content-type: application/json
 
 ###
 GET http://localhost:3000/api/offers/paginate
+
+###
+GET http://localhost:3000/api/products
+###
+
+POST http://localhost:3000/api/checkout
+content-type: application/json
+
+{
+   "id":"recivYqubBjGZDicn",
+   "offerId": 15,
+   "quantity": 1
+   
+}
+
