@@ -16,7 +16,7 @@ export const getStaticProps = async () => {
 };
 
 export default function Home({ offers }) {
-  // console.log(offers);
+  console.log('srodowisko:',process.env.NEXT_PUBLIC_BASE_URL)
   const { data } = useSWR('/api/offers', jsonFetcher, { initialData: offers });
   // console.log('nowe data: ', data);
   return (
