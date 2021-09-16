@@ -18,7 +18,7 @@ export default async (req, res) => {
     if (event.type === 'payment_intent.succeeded') {
       const offerId = event.data.object.metadata.offerId;
       await finalize(offerId);
-      console.log(`event processed...`)
+      console.log(`event processed...`);
     }
 
     res.json({ received: true });
