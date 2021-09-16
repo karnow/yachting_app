@@ -1,12 +1,13 @@
 import BaseLayout from 'components/BaseLayout';
 import Link from 'next/link';
 import Image from 'next/image';
-import getRecentOffers from 'services/offers/getRecent';
-import useSWR from 'swr';
-import { jsonFetcher } from 'utils';
+// import getRecentOffers from 'services/offers/getRecent';
+// import useSWR from 'swr';
+// import { jsonFetcher } from 'utils';
+import getFeatured from 'services/offers/getFeatured';
 
 export const getStaticProps = async () => {
-  const offers = await getRecentOffers(8);
+  const offers = await getFeatured(8);
 
   return {
     props: {
@@ -16,9 +17,9 @@ export const getStaticProps = async () => {
 };
 
 export default function Home({ offers }) {
-  console.log('srodowisko:',process.env.NEXT_PUBLIC_BASE_URL)
-  const { data } = useSWR('/api/offers', jsonFetcher, { initialData: offers });
-  // console.log('nowe data: ', data);
+  
+  // const { data } = useSWR('/api/offers', jsonFetcher, { initialData: offers });
+  
   return (
     <BaseLayout>
       <section className="text-gray-600 body-font">
@@ -36,7 +37,7 @@ export default function Home({ offers }) {
             </p>
           </div>
           <div className="flex flex-wrap -m-4">
-            {data.map((offer) => (
+            {offers.map((offer) => (
               <div key={offer.id} className="xl:w-1/4 md:w-1/2 p-4 cursor-pointer">
                 <Link href={`/offers/${offer.id}`}>
                   <div className="bg-gray-100 p-6 rounded-lg">

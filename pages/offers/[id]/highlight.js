@@ -27,6 +27,7 @@ export const getServerSideProps = async ({ req, query }) => {
 };
 
 export default function OfferEdit({ offer, products }) {
+  console.log('oferta:',offer)
   const offerForm = useRef();
   const [error, setError] = useState();
   const [formProcessing, setFormProcessing] = useState(false);
@@ -88,11 +89,8 @@ export default function OfferEdit({ offer, products }) {
                     className="h-10 w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                     {products.map((product) => (
                       <option value={product.airtableId} key={product.airtableId}>
-                        {product.name} -{' '}
-                        {(product.priceCents / 100).toLocaleString('en-US', {
-                          style: 'currency',
-                          currency: product.priceCurrency
-                        })}
+                        {product.Name} -{' '}
+                        {(product.priceCents / 100)}{' '}{product.priceCurrency} 
                       </option>
                     ))}
                   </select>
