@@ -5,7 +5,7 @@ export default async (req, res) => {
     case 'GET': {
       const { offset, category } = req.query;
       const offers = await paginateOffers(offset, category);
-      console.log('oferty stroniciwane',offers);
+
       res.status(200).json({
         offers: offers.records.map((offer) => offer.fields),
         offset: offers.offset

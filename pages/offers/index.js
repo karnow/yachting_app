@@ -19,6 +19,7 @@ export const getStaticProps = async () => {
 
 
 export default function Home({ offers, offset }) {
+  console.log('przesumiecie:', offset)
   const { query } = useRouter();
   const [currentOffers, setOffers] = useState(offers);
   const [currentOffset, setOffset] = useState(offset);
