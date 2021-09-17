@@ -1,7 +1,7 @@
 import BaseLayout from 'components/BaseLayout';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+import OfferItem from 'components/OfferItem';
 import paginateOffers from 'services/offers/paginate';
 import { jsonFetcher } from 'utils';
 import { useRouter } from 'next/router';
@@ -64,30 +64,7 @@ export default function Home({ offers, offset }) {
           </div>
           <div className="flex flex-wrap -m-4">
             {currentOffers.map((offer) => (
-              <div key={offer.id} className="xl:w-1/4 md:w-1/2 p-4 cursor-pointer">
-                <Link href={`/offers/${offer.id}`}>
-                  <div className="bg-gray-100 p-6 rounded-lg">
-                    <Image
-                      className="h-40 rounded w-full object-cover object-center mb-6"
-                      src="/boat.jpg"
-                      width={720}
-                      height={400}
-                      alt="content"
-                    />
-                    <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">
-                      {offer.category}
-                    </h3>
-                    <h2 className="text-lg text-gray-900 font-medium title-font mb-4">
-                      {offer.title} - {offer.status}
-                    </h2>
-                    <p className="leading-relaxed text-base">
-                      {offer.description.length > 100
-                        ? offer.description.substring(0, 100) + '...'
-                        : offer.description}
-                    </p>
-                  </div>
-                </Link>
-              </div>
+              <OfferItem key={offer.id} offer={offer} />
             ))}
             {currentOffset && (
               <button
