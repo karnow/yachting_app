@@ -1,5 +1,5 @@
 export default async (offset, category) => {
-  console.log('tu paginate service i jego offset: ', offset);
+  
   let apiUrl = `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE}/offers?pageSize=4&view=onlyActiv`;
   if (offset) {
     apiUrl += `&offset=${offset}`;
