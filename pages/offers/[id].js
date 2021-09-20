@@ -21,7 +21,9 @@ export const getStaticProps = async ({ params }) => {
   return {
     revalidate: 30,
     props: {
-      offer
+      offer,
+      metaTitle: offer.title,
+      metaDescription: offer.description
     }
   };
 };
