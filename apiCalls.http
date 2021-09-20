@@ -41,3 +41,19 @@ content-type: application/json
    
 }
 
+###
+POST http://localhost:3000/api/users/resetPassword
+content-type: application/json
+
+{
+    "email": "admin@admin.pl"
+}
+
+###
+PUT http://localhost:3000/api/users/resetPassword
+content-type: application/json
+
+{
+    "resetToken": "c6c88c760b6102c746a6bf6b4d41a90ac4a086db02d0",
+    "password": "karol123"
+}
