@@ -2,13 +2,21 @@ import { useRef, useState, useEffect } from 'react';
 import BaseLayout from 'components/BaseLayout';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/client';
+import { uploadImage } from 'utils';
 
 export default function OfferNew() {
   const offerForm = useRef();
   const [error, setError] = useState();
   const router = useRouter();
   const [formProcessing, setFormProcessing] = useState(false);
+  const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
   const [session, loading] = useSession();
+
+  const handleImagePreview = (e) => {
+    const url = window.URL.createObjectURL(e.target.files[0]);
+    console.log(`url zdjecia: `, url);
+    setImagePreviewUrl(url);
+  };
 
   useEffect(() => {
     if (!session && !loading) {
@@ -22,6 +30,7 @@ export default function OfferNew() {
     setError(null);
     setFormProcessing(true);
     const form = new FormData(offerForm.current);
+
     const payload = {
       title: form.get('title'),
       category: form.get('category'),
@@ -31,6 +40,13 @@ export default function OfferNew() {
       location: form.get('location')
       // status: 'active'
     };
+
+    if (form.get('picture')) {
+      const file = await uploadImage(form.get('picture'));
+      payload.imageUrl = file.secure_url;
+      console.log('urlImage: ',payload.imageUrl);
+    }
+
     const response = await fetch('/api/offers', {
       method: 'POST',
       body: JSON.stringify(payload),
@@ -151,6 +167,26 @@ export default function OfferNew() {
                     name="description"
                     required
                     className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
+                </div>
+              </div>
+              {imagePreviewUrl && (
+                <div className="p-2 w-full">
+                  <img src={imagePreviewUrl} className="rounded" />
+                </div>
+              )}
+              <div className="p-2 w-full">
+                <div className="relative">
+                  <label htmlFor="picture" className="leading-7 text-sm text-gray-600">
+                    Picture
+                  </label>
+                  <input
+                    onChange={handleImagePreview}
+                    type="file"
+                    id="picture"
+                    name="picture"
+                    required
+                    className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  />
                 </div>
               </div>
               <div className="p-2 w-full">
