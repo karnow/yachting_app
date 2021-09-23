@@ -57,3 +57,6 @@ content-type: application/json
     "resetToken": "c6c88c760b6102c746a6bf6b4d41a90ac4a086db02d0",
     "password": "karol123"
 }
+
+###
+GET http://localhost:3000/api/offers/checkFeatured

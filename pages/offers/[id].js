@@ -1,6 +1,7 @@
 import BaseLayout from 'components/BaseLayout';
 import getRecentOffers from 'services/offers/getRecent';
 import getOffer from 'services/offers/get';
+import checkFeatured from 'services/offers/checkFeatured';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/client';
 import isAuthorized from 'services/offers/isAuthorized';
@@ -17,17 +18,19 @@ export const getStaticPaths = async () => {
 };
 export const getStaticProps = async ({ params }) => {
   const offer = await getOffer(params.id);
+  const featured = await checkFeatured(params.id);
 
   return {
     revalidate: 30,
     props: {
       offer,
       metaTitle: offer.title,
-      metaDescription: offer.description
+      metaDescription: offer.description,
+      featured: featured
     }
   };
 };
-export default function OfferPage({ offer }) {
+export default function OfferPage({ offer, featured }) {
   const router = useRouter();
   const [session] = useSession();
 
@@ -91,6 +94,15 @@ export default function OfferPage({ offer }) {
             {isAuthorized(offer, session) && (
               <p>
                 <Link href={`/offers/${offer.id}/edit`}>Edit this offer</Link>
+              </p>
+            )}
+
+            {isAuthorized(offer, session) && !featured && (
+              <p>
+                <Link href={`/offers/${offer.id}/highlight`}>
+                  {' '}
+                  / Pay for and highlight the offer
+                </Link>
               </p>
             )}
           </div>
