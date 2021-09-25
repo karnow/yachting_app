@@ -1,7 +1,7 @@
 import BaseLayout from 'components/BaseLayout';
 import getRecentOffers from 'services/offers/getRecent';
+import { useEffect } from 'react';
 import getOffer from 'services/offers/get';
-import checkFeatured from 'services/offers/checkFeatured';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/client';
 import isAuthorized from 'services/offers/isAuthorized';
@@ -18,21 +18,50 @@ export const getStaticPaths = async () => {
 };
 export const getStaticProps = async ({ params }) => {
   const offer = await getOffer(params.id);
-  const featured = await checkFeatured(params.id);
 
   return {
     revalidate: 30,
     props: {
       offer,
       metaTitle: offer.title,
-      metaDescription: offer.description,
-      featured: featured
+      metaDescription: offer.description
     }
   };
 };
-export default function OfferPage({ offer, featured }) {
+export default function OfferPage({ offer }) {
   const router = useRouter();
   const [session] = useSession();
+
+  console.log('sesja urzytkownika:', session);
+  console.log('oferta pay:', offer.stripeCheckoutStatus);
+  console.log('visit:', offer.visit);
+
+  const visitsCounter = async (offerVisitCurrent) => {
+    const counter = offerVisitCurrent + 1;
+    const payload = {
+      visit: counter
+    };
+
+    const response = await fetch(`/api/offers/${offer.id}/visitUpdate`, {
+      method: 'PUT',
+      body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    if (response.ok) {
+      console.log('visit is upgrade');
+      const payload = await response.json();
+      // console.log('response:', payload);
+    } else {
+      const payload = await response.json();
+      console.log(payload.error?.details[0]?.message);
+    }
+  };
+
+  useEffect(() => {
+    visitsCounter(offer.visit);
+  }, []);
 
   if (router.isFallback) {
     return (
@@ -82,6 +111,7 @@ export default function OfferPage({ offer, featured }) {
                   </svg>
                 </button>
               </div>
+              <span>{`visit ${offer.visit}`}</span>
             </div>
             {offer.imageUrl && (
               <div
@@ -97,10 +127,9 @@ export default function OfferPage({ offer, featured }) {
               </p>
             )}
 
-            {isAuthorized(offer, session) && !featured && (
+            {isAuthorized(offer, session) && !offer.stripeCheckoutStatus && (
               <p>
                 <Link href={`/offers/${offer.id}/highlight`}>
-                  {' '}
                   / Pay for and highlight the offer
                 </Link>
               </p>

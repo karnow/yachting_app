@@ -8,7 +8,8 @@ const schema = Joi.object({
   description: Joi.string().required(),
   location: Joi.string().required(),
   price: Joi.number().greater(0).required(),
-  imageUrl: Joi.string()
+  imageUrl: Joi.string(),
+  visit: Joi.number()
 });
 
 const create = async (payload, userId) => {

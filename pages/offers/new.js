@@ -37,7 +37,8 @@ export default function OfferNew() {
       mobile: form.get('phone'),
       price: form.get('price'),
       description: form.get('description'),
-      location: form.get('location')
+      location: form.get('location'),
+      visit: 1
       // status: 'active'
     };
 
