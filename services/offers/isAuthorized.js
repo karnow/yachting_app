@@ -7,4 +7,3 @@ const isAuthorized = (offer, session) => {
 };
 
 export default isAuthorized;
-
