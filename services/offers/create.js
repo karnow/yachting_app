@@ -13,17 +13,18 @@ const schema = Joi.object({
 });
 
 const create = async (payload, userId) => {
-  console.log('oferta dotarla do backendu',payload);
+  console.log('oferta dotarla do backendu', payload);
   const validatedOffer = await schema.validateAsync(payload);
-  console.log('oferta zwalidatowana',validatedOffer);
-  console.log('id usera dotarlo na backend:',userId);
+  console.log('oferta zwalidatowana', validatedOffer);
+  console.log('id usera dotarlo na backend:', userId);
 
   const offer = await airDB('offers').create([
     {
       fields: {
         ...validatedOffer,
-        users:[userId],
-        status: 'inactive'
+        users: [userId],
+        status: 'inactive',
+        favorite: 'false'
       }
     }
   ]);

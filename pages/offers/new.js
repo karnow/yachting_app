@@ -39,13 +39,12 @@ export default function OfferNew() {
       description: form.get('description'),
       location: form.get('location'),
       visit: 1
-      // status: 'active'
     };
 
     if (form.get('picture')) {
       const file = await uploadImage(form.get('picture'));
       payload.imageUrl = file.secure_url;
-      console.log('urlImage: ',payload.imageUrl);
+      console.log('urlImage: ', payload.imageUrl);
     }
 
     const response = await fetch('/api/offers', {
@@ -65,7 +64,7 @@ export default function OfferNew() {
       setError(payload.err.details[0].message);
       console.log('blad:', error);
     }
-    console.log('kto zalogowany:', session )
+    console.log('kto zalogowany:', session);
   };
   if (loading) {
     return <div>Loading...</div>;
@@ -75,7 +74,6 @@ export default function OfferNew() {
   }
   return (
     <BaseLayout>
-    
       <section className="text-gray-600 body-font relative">
         <div className="container px-5 py-24 mx-auto">
           <div className="flex flex-col text-center w-full mb-12">
