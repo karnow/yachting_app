@@ -10,7 +10,8 @@ const getForUser = async (email) => {
       })
       .firstPage();
   
-    return offers.map((offer) => offer.fields);
+    const offersByEmail =offers.map((offer) => offer.fields);
+    return offersByEmail.filter((offer)=> offer.status === 'active');
   };
   
   export default getForUser;
