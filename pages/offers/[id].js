@@ -105,7 +105,10 @@ export default function OfferPage({ offer }) {
               <p className="leading-relaxed mb-4">{offer.description}</p>
               <div className="flex border-t border-gray-200 py-2">
                 <span className="text-gray-500">Location</span>
-                <span className="ml-auto text-gray-900">{offer.location}</span>
+                <span className="ml-auto text-gray-900">
+                <p>
+                <Link href={`/cities/${offer.location}`}>{offer.location}</Link>
+              </p></span>
               </div>
               <div className="flex border-t border-gray-200 py-2">
                 <span className="text-gray-500">Price</span>
