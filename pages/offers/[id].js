@@ -107,7 +107,7 @@ export default function OfferPage({ offer }) {
                 <span className="text-gray-500">Location</span>
                 <span className="ml-auto text-gray-900">
                 <p>
-                <Link href={`/cities/${offer.location}`}>{offer.location}</Link>
+                <Link href={`/cities/${offer.location}`}>{offer.location[0].toUpperCase()+offer.location.substring(1)}</Link>
               </p></span>
               </div>
               <div className="flex border-t border-gray-200 py-2">

@@ -35,7 +35,7 @@ export default function MyOffers({ offers, session }) {
             <h1 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">
               My offers - {session.user.name}
             </h1>
-            <div className="h-1 w-20 bg-indigo-500 rounded"></div>
+            <div className="h-1 w-20 bg-indigo-500 rounded mb-8"></div>
           </div>
           <div className="flex flex-wrap -m-4">
             {offers.length === 0 && (
