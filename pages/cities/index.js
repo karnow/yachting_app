@@ -13,7 +13,7 @@ export const getStaticProps = async () => {
 };
 
 export default function Home({ cities }) {
-  const sortedCities = cities.sort();
+  
 
   return (
     <BaseLayout>
@@ -25,7 +25,7 @@ export default function Home({ cities }) {
           </h1>
           <div className="h-1 w-20 bg-indigo-500 rounded mb-8"></div>
           <div>
-            {sortedCities.map((city) => (
+            {cities.map((city) => (
               <div className="mb-2" key={city}>
                 <Link href={`/cities/${city}`}>{city[0].toUpperCase() + city.substring(1)}</Link>
                 <hr className="w-80 bg-gray-500 rounded mb-4"></hr>

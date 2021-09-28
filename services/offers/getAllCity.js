@@ -12,7 +12,7 @@ const getAllCity = async () => {
   const offers = allOffers.map((offer) => offer.fields);
   const locationArray=offers.map((offer)=> offer.location)
   const cities = [...new Set(locationArray)];
-  return cities;
+  return cities.sort();
 };
 
 export default getAllCity;
