@@ -168,6 +168,14 @@ export default function OfferPage({ offer }) {
                 </Link>
               </p>
             )}
+            {isAuthorizedNotOwner(session) && (
+              <p>
+                <Link href={`/offers/${offer.id}/contactForm`}>
+                  / Contact with the author
+                </Link>
+              </p>
+            )}
+          
           </div>
         </div>
       </section>

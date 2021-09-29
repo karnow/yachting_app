@@ -8,6 +8,7 @@ const getAllUsers = async () => {
     .firstPage();
 
   const users = allUsers.map((user) => user.fields);
+  console.log(users);
   const emailUsers = users.map((user) => user.email);
   return emailUsers.sort();
 };
