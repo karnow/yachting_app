@@ -5,22 +5,24 @@ import get from 'services/offers/get';
 import mailGun from 'nodemailer-mailgun-transport';
 
 const schema = Joi.object({
+  name: Joi.string().required(),
   email: Joi.string().email().required(),
   message: Joi.string().required(),
   offerId: Joi.string().required()
 });
 
 const sendMessage = async (payload) => {
-  const { email, message, offerId } = await schema.validateAsync(payload);
+  const { name, email, message, offerId } = await schema.validateAsync(payload);
   const offer = await get(offerId);
 
+  const senderName = name;
   const senderEmail = email;
   const senderMessage = message;
   const offerTitle = offer.title;
   const ownerEmail = offer?.['email (from users)'][0];
 
   if (!ownerEmail) {
-    return null;
+    return result=false;
   }
   const auth = {
     auth: {
@@ -33,7 +35,7 @@ const sendMessage = async (payload) => {
     from: `${senderEmail}`,
     to: `${ownerEmail}`,
     subject: `${offerTitle}`,
-    html: `Hey! <br/>Wiadomość z Yachting APP od użytkownika: ${senderEmail}
+    html: `Hey! <br/>Wiadomość z Yachting APP od użytkownika: ${senderName}, email: ${senderEmail}
       <br/> Offer : ${offerTitle}
          <br/> Message : ${senderMessage}
     `
