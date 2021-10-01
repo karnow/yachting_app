@@ -33,6 +33,8 @@ export default function Contact() {
     if (response.ok) {
       setConfirmation('You message was send');
       console.log(response)
+      const payload = await response.json();
+      console.log('payload',payload);
     //   const payload = await response.json();
     //   console.log(payload.payload?.['email (from users)'][0])
     } else {
