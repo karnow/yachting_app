@@ -21,7 +21,6 @@ export default function Contact() {
       message: form.get('message'),
       offerId: router.query.id
     };
-
     const response = await fetch('/api/users/contact', {
       method: 'POST',
       body: JSON.stringify(payload),
@@ -29,21 +28,21 @@ export default function Contact() {
         'Content-Type': 'application/json'
       }
     });
+    const data = await response.json();
 
-    if (response.ok) {
+    if (data.message === true) {
       setConfirmation('You message was send');
-      console.log(response)
-      const payload = await response.json();
-      console.log('payload',payload);
-    //   const payload = await response.json();
-    //   console.log(payload.payload?.['email (from users)'][0])
+      setTimeout(reload, 2000);
     } else {
       const payload = await response.json();
       setFormProcessing(false);
       setError(payload.error);
     }
   };
-
+  function reload() {
+    const id = router.query.id;
+    router.push(`/offers/${id}`);
+  }
   return (
     <BaseLayout>
       <section className="text-gray-600 body-font relative">
@@ -58,7 +57,7 @@ export default function Contact() {
               <div className="p-2 w-full">
                 <div className="relative">
                   <label htmlFor="email" className="leading-7 text-sm text-gray-600">
-                    Email
+                    Your e-mail
                   </label>
                   <input
                     type="email"
