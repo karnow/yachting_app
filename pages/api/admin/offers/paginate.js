@@ -1,6 +1,7 @@
 import paginateOffers from 'services/offers/allForAdmin';
+import onlyAdmin from 'middlewares/onlyAdmin';
 
-export default async (req, res) => {
+const handler = async (req, res) => {
   switch (req.method) {
     case 'GET': {
       const { offset } = req.query;
@@ -16,3 +17,4 @@ export default async (req, res) => {
       res.status(400);
   }
 };
+export default onlyAdmin(handler);
