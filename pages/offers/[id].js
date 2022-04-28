@@ -32,9 +32,12 @@ export const getStaticProps = async ({ params }) => {
 };
 
 export default function OfferPage({ offer }) {
-  const [currentFavorite, setOffer] = useState(offer.favorite);
+  const [offerfav, setOffer] = useState(offer);
+ 
   const router = useRouter();
   const [session] = useSession();
+  console.log(offerfav)
+  
 
   const visitsCounter = async (offerVisitCurrent) => {
     const counter = offerVisitCurrent + 1;
@@ -65,13 +68,13 @@ export default function OfferPage({ offer }) {
     const response = await fetch(`/api/offers/${id}/toggleFavorite`, { method: 'PUT' });
     if (response.ok) {
       const { offer: updatedOffer } = await response.json();
-
+     
       if (offer.id === updatedOffer.id) {
-        setOffer(updatedOffer.favorite);
+        setOffer(updatedOffer);
 
         return offer;
       }
-    } else {
+    }else {
       const payload = await response.json();
       console.log(payload.error?.details[0]?.message);
     }
@@ -129,8 +132,8 @@ export default function OfferPage({ offer }) {
                     className={classNames(
                       'rounded-full w-10 h-10 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4"',
                       {
-                        'bg-gray-200': currentFavorite === 'false',
-                        'bg-gray-800': currentFavorite === 'true'
+                        'bg-gray-200': offerfav.favorite === 'false',
+                        'bg-gray-800': offerfav.favorite === 'true'
                       }
                     )}>
                     <svg
